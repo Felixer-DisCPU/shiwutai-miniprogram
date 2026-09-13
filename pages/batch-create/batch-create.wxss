@@ -1,0 +1,2 @@
+/* 新建清单页 · 表单用 WeUI 官方 .weui-cells/.weui-cell_input，无需额外样式 */
+.bc-label { font-size: 13px; color: var(--weui-FG-1); margin-bottom: 8px; }
