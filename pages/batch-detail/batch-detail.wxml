@@ -1,0 +1,56 @@
+<view class="page" wx:if="{{detail}}">
+  <view class="weui-panel">
+    <view class="weui-panel__bd" style="padding:14px 16px;">
+      <view style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <text class="sh-title" style="flex:1;margin-right:12px;">{{detail.name}}</text>
+        <text class="sh-tag sh-tag--brand" bindtap="edit">编辑</text>
+      </view>
+      <view class="sh-caption" style="margin-top:6px">{{detail.klass}} · {{detail.subject}} · {{detail.type}} · 作答日期 {{detail.date}}</view>
+      <view class="sh-divider"></view>
+      <view class="sh-body">覆盖知识点：{{detail.kps}}</view>
+    </view>
+  </view>
+
+  <view class="weui-panel">
+    <view class="weui-panel__hd">处理进度<text class="sh-caption" style="margin-left:8px;">4 个阶段</text></view>
+    <view class="weui-panel__bd" style="padding:14px 16px;">
+      <view class="bd-stages">
+        <view class="bd-stage is-{{item.state}}" wx:for="{{detail.stages}}" wx:key="label">
+          <view class="bd-stage__bar"></view>
+          <view class="bd-stage__lb">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="weui-panel">
+    <view class="weui-panel__hd">识别概况</view>
+    <view class="weui-panel__bd">
+      <view class="sh-metrics">
+        <view class="sh-metrics__item" wx:for="{{detail.summary}}" wx:key="lb">
+          <view class="sh-metrics__num {{item.color ? 'sh-v-' + item.color : ''}}">{{item.num}}</view>
+          <view class="sh-metrics__label">{{item.lb}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="weui-panel">
+    <view class="weui-panel__hd">知识点掌握度<text class="sh-caption" style="margin-left:8px;">Top 5</text></view>
+    <view class="weui-panel__bd" style="padding:6px 16px 14px;">
+      <view class="sh-kp" wx:for="{{detail.topKps}}" wx:key="name">
+        <view class="sh-kp__lb">
+          <text>{{item.name}}</text>
+          <text class="sh-v-{{item.cls}}">{{item.rate}}%</text>
+        </view>
+        <view class="sh-bar"><view class="sh-bar__i sh-bar__i--{{item.cls}}" style="width: {{item.rate}}%"></view></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="sh-btns">
+    <button class="weui-btn weui-btn_primary" bindtap="goReview">继续校正确认（{{pendingCount}}）</button>
+    <button class="weui-btn weui-btn_default" bindtap="goAdvice">查看教学建议</button>
+    <button class="weui-btn weui-btn_default" bindtap="goCapture">继续录入影像</button>
+  </view>
+</view>
