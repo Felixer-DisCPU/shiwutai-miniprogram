@@ -1,0 +1,66 @@
+<view class="page" wx:if="{{advice}}">
+  <!-- 清单选择器：选择要生成报告的作业 -->
+  <view class="weui-panel" wx:if="{{batches.length}}">
+    <view class="weui-panel__hd">选择清单</view>
+    <view class="weui-panel__bd" style="padding:12px 16px;">
+      <view class="sh-chips">
+        <text class="sh-chip {{item.id === batchId ? 'sh-chip--on' : ''}}" wx:for="{{batches}}" wx:key="id"
+              data-id="{{item.id}}" bindtap="pickBatch">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="sh-notice">
+    <text class="sh-notice__ic">✦</text>
+    <view>基于 <text style="font-weight:600">{{advice.source || '当前学情'}}</text> 生成。所有结论均可追溯到具体统计数字，可编辑后使用。</view>
+  </view>
+
+  <view class="weui-panel" wx:if="{{advice.aiText}}">
+    <view class="weui-panel__hd">AI 讲评建议（全文，可参考编辑）</view>
+    <view class="weui-panel__bd" style="padding:12px 16px;">
+      <view class="av-aitext">{{advice.aiText}}</view>
+    </view>
+  </view>
+
+  <view class="weui-panel">
+    <view class="weui-panel__hd">全班层面 · 下一节讲什么</view>
+    <view class="weui-panel__bd" style="padding:4px 16px 12px;">
+      <block wx:if="{{advice.classLevel.length}}">
+        <view class="av-item" wx:for="{{advice.classLevel}}" wx:key="name">
+          <view class="av-row">
+            <view class="sh-tag sh-tag--{{item.rankType}}">{{item.rank}}</view>
+            <text class="av-name">{{item.name}}</text>
+            <view class="sh-tag sh-tag--{{item.rankType}} av-rate">{{item.rate}}</view>
+          </view>
+          <view class="av-detail">{{item.detail}}</view>
+        </view>
+      </block>
+      <view class="sh-empty" wx:else>暂无全班讲评建议，请先完成作业的录入与校正。</view>
+    </view>
+  </view>
+
+  <view class="weui-panel">
+    <view class="weui-panel__hd">个体层面 · 课后辅导谁</view>
+    <view class="weui-panel__bd" style="padding:4px 16px 12px;">
+      <block wx:if="{{advice.personal.length}}">
+        <view class="av-item" wx:for="{{advice.personal}}" wx:key="name">
+          <view class="av-between">
+            <text class="av-name">{{item.name}}</text>
+            <view class="sh-tag sh-tag--{{item.levelType}}">{{item.level}}</view>
+          </view>
+          <view class="av-detail">{{item.detail}}</view>
+        </view>
+      </block>
+      <view class="sh-empty" wx:else>暂无需优先辅导的学生，或尚未归纳辅导名单。</view>
+    </view>
+  </view>
+
+  <view class="sh-btns">
+    <button class="weui-btn weui-btn_primary" bindtap="toCourseware">加入讲评课件</button>
+    <button class="weui-btn weui-btn_default" bindtap="exportReport">导出为学情报告</button>
+    <button class="weui-btn weui-btn_default" bindtap="refreshAI">刷新 AI 建议</button>
+  </view>
+</view>
+<view class="page" wx:else>
+  <view class="sh-empty">正在加载学情建议…</view>
+</view>

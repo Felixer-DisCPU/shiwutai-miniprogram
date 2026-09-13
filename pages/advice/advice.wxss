@@ -1,0 +1,9 @@
+/* 学情报告页 · 视觉层（WeUI 风格），不改逻辑与文本 */
+.av-aitext { font-size: 13px; color: var(--weui-FG-1); line-height: 1.7; }
+.av-item { padding: 10px 0; }
+.av-item + .av-item { border-top: 1rpx solid var(--weui-FG-3); }
+.av-row { display: flex; align-items: center; gap: 8px; }
+.av-between { display: flex; align-items: center; justify-content: space-between; }
+.av-name { font-size: 14px; font-weight: 600; color: var(--weui-FG-0); flex: 1; min-width: 0; }
+.av-rate { flex: none; }
+.av-detail { font-size: 12.5px; color: var(--weui-FG-1); line-height: 1.65; margin-top: 6px; }
