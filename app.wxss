@@ -1,0 +1,393 @@
+/* =====================================================================
+ * 师务台 · 全局样式（WeUI 控件 + Fluent UI 视觉）
+ * ---------------------------------------------------------------------
+ * 设计来源：
+ *  - 组件结构来自 WeUI v2.6.26（styles/weui.wxss，官方库，不动）。
+ *  - 视觉语言叠加 Microsoft Fluent UI：深度阴影 / 圆角 / Fluent 蓝 /
+ *    清晰层次 / 入场动效 / Reveal 悬停。
+ * 做法：保留 .weui-* 控件类（仍用 WeUI），只在本文件用更高声明顺序
+ *      的同类选择器覆盖其外观，形成 Fluent 皮肤。
+ * 仅视觉层重构，不改变任何业务 JS 逻辑与接口契约。
+ * 注意：WXSS 不支持 * 选择器，故清除 WeUI 默认描边用 ::before/::after
+ *      的 border:none，动效只针对具名类，不用通配符。
+ * ===================================================================== */
+
+@import "./styles/weui.wxss";
+
+page {
+  /* 字体：Segoe UI 优先，回退到系统中英文字体 */
+  --f-font: "Segoe UI", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+
+  /* Fluent 品牌蓝（同时覆盖 WeUI 的绿主色） */
+  --weui-BRAND: #0F6CBD;
+  --weui-BRAND-80: #0C5291;
+  --weui-BRAND-90: #0E63A8;
+  --weui-BRAND-100: #0F6CBD;
+  --weui-BRAND-120: #4A93D6;
+  --weui-BRAND-170: #CFE4F6;
+
+  /* Fluent 设计令牌 */
+  --f-accent: #0F6CBD;
+  --f-accent-hover: #0E63A8;
+  --f-accent-pressed: #0C5291;
+  --f-accent-light: #C7E0F4;
+  --f-accent-soft: #EAF1F8;
+  --f-accent-soft2: #F3F8FD;
+  --f-neutralPrimary: #323130;
+  --f-neutralSecondary: #605E5C;
+  --f-neutralTertiary: #A19F9D;
+  --f-neutralLight: #EDEBE9;
+  --f-neutralLighter: #F3F2F1;
+  --f-neutralLighterAlt: #FAF9F8;
+  --f-white: #FFFFFF;
+  --f-error: #A4262C;
+  --f-warn: #FF9C19;
+  --f-ok: #107C10;
+
+  /* 语义状态色（供 sh-* 使用，统一为 Fluent 调色板） */
+  --c-brand: #0F6CBD;
+  --c-ok: #107C10;
+  --c-warn: #FF9C19;
+  --c-danger: #A4262C;
+
+  /* 深度阴影（Fluent elevation） */
+  --f-depth4: 0 1.6px 3.6px rgba(0, 0, 0, .13), 0 .3px .9px rgba(0, 0, 0, .11);
+  --f-depth8: 0 3.2px 7.2px rgba(0, 0, 0, .13), 0 .6px 1.8px rgba(0, 0, 0, .11);
+  --f-depth16: 0 6.4px 14.4px rgba(0, 0, 0, .13), 0 1.2px 3.6px rgba(0, 0, 0, .11);
+
+  --f-radius-card: 8px;
+  --f-radius-control: 4px;
+  --f-radius-pill: 999px;
+  --f-ease: cubic-bezier(.1, .9, .2, 1);
+
+  /* 浅灰底，让白色卡片带深度浮起（Fluent 浅色主题） */
+  background-color: var(--f-neutralLighter);
+  color: var(--f-neutralPrimary);
+  font-family: var(--f-font);
+}
+
+/* 强制品牌蓝：覆盖 WeUI 在 [data-weui-theme] 上设定的默认绿主色 */
+[data-weui-theme="light"], page {
+  --weui-BRAND: #0F6CBD;
+  --weui-BRAND-80: #0C5291;
+  --weui-BRAND-90: #0E63A8;
+  --weui-BRAND-100: #0F6CBD;
+  --weui-BRAND-120: #4A93D6;
+  --weui-BRAND-170: #CFE4F6;
+  /* 把 WeUI 的浅分隔线调淡，贴合 Fluent 的轻描边 */
+  --weui-FG-3: #EDEBE9;
+}
+
+/* 页面容器 */
+.page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 12px;
+  background-color: var(--f-neutralLighter);
+  font-family: var(--f-font);
+}
+
+/* ============ Fluent 皮肤：WeUI 组件外观覆盖 ============ */
+
+/* 卡片（面板） */
+.weui-panel {
+  background: var(--f-white);
+  border-radius: var(--f-radius-card);
+  box-shadow: var(--f-depth8);
+  margin: 8px 0;
+  overflow: hidden;
+  transition: box-shadow .2s var(--f-ease);
+}
+.weui-panel:active { box-shadow: var(--f-depth16); }
+.weui-panel__hd {
+  padding: 14px 16px 6px;
+  color: var(--f-neutralPrimary);
+  font-size: 14px;
+  font-weight: 600;
+  background: transparent;
+}
+
+/* 列表组（带圆角 + 阴影，去掉 WeUI 上下 1px 描边） */
+.weui-cells {
+  background: var(--f-white);
+  border-radius: var(--f-radius-card);
+  overflow: hidden;
+  margin-top: 8px;
+  box-shadow: var(--f-depth4);
+}
+.weui-cells::before, .weui-cells::after { border: none; }
+.weui-cells__title {
+  color: var(--f-neutralSecondary);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  margin: 16px 16px 4px;
+}
+.weui-cell {
+  padding: 12px 16px;
+  color: var(--f-neutralPrimary);
+  background: var(--f-white);
+  position: relative;
+  transition: background-color .15s var(--f-ease);
+}
+.weui-cell_active, .weui-cell:hover { background: var(--f-neutralLighter); }
+.weui-cell::before { border-color: var(--weui-FG-3); }
+.weui-cell__hd .weui-label, .weui-label {
+  color: var(--f-neutralPrimary);
+  font-size: 15px;
+}
+.weui-cell__bd .weui-input, .weui-input {
+  color: var(--f-neutralPrimary);
+  font-size: 15px;
+}
+.weui-cell_access .weui-cell__ft { color: var(--f-neutralTertiary); }
+.weui-cell_access .weui-cell__ft:after { border-color: var(--f-neutralTertiary); }
+.weui-cell_input { padding: 12px 16px; }
+
+/* 九宫格：Fluent 卡片化 */
+.weui-grids {
+  border: none;
+  background: var(--f-white);
+  border-radius: var(--f-radius-card);
+  overflow: hidden;
+  box-shadow: var(--f-depth4);
+}
+.weui-grids::before, .weui-grids::after,
+.weui-grid::before, .weui-grid::after { border-color: var(--weui-FG-3); }
+.weui-grid__icon {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; line-height: 1; color: var(--f-accent);
+}
+.weui-grid_active { background-color: var(--f-accent-soft); }
+
+/* 上传器 */
+.weui-uploader__file, .weui-uploader__img { border-radius: var(--f-radius-control); }
+
+/* 按钮：Fluent 化（更紧凑 + 更大圆角 + 深度 + 按压态 + 去掉 WeUI 1px 描边） */
+.weui-btn {
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--f-white);
+  border: none;
+  box-shadow: var(--f-depth4);
+  line-height: 1.5;
+  padding: 8px 16px;
+  margin: 0;
+  transition: background-color .15s var(--f-ease), box-shadow .15s var(--f-ease);
+}
+.weui-btn::after { content: none; border: none; }
+.weui-btn_primary { background-color: var(--f-accent); color: var(--f-white); }
+.weui-btn_primary:active { background-color: var(--f-accent-pressed); box-shadow: var(--f-depth8); }
+.weui-btn_default { background-color: var(--f-neutralLighter); color: var(--f-neutralPrimary); }
+.weui-btn_default:active { background-color: var(--f-neutralLight); }
+.weui-btn_warn { background-color: var(--f-error); color: var(--f-white); }
+.weui-btn_warn:active { background-color: #8E1F24; }
+/* 横向并排按钮组 */
+.weui-btn-row { display: flex; gap: 8px; }
+.weui-btn-row .weui-btn { flex: 1; min-width: 0; max-width: none; margin: 0; }
+
+/* ============ 辅助类（WeUI 未提供，Fluent 化） ============ */
+
+/* 头像：姓名首字母 + 品牌蓝圆底 + 轻阴影 */
+.sh-avatar {
+  width: 48px; height: 48px; flex: none;
+  border-radius: 50%;
+  background: var(--f-accent); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 600;
+  box-shadow: var(--f-depth4);
+}
+
+/* 指标网格 */
+.sh-metrics {
+  display: flex;
+  background: var(--f-neutralLighterAlt);
+  border-radius: var(--f-radius-card);
+  overflow: hidden;
+}
+.sh-metrics__item {
+  flex: 1; text-align: center; padding: 16px 4px; position: relative;
+}
+.sh-metrics__item + .sh-metrics__item::before {
+  content: ""; position: absolute; left: 0; top: 14px; bottom: 14px;
+  width: 1rpx; background: var(--weui-FG-3);
+}
+.sh-metrics__num { font-size: 22px; font-weight: 600; color: var(--f-neutralPrimary); }
+.sh-metrics__num--v-ok { color: var(--c-ok); }
+.sh-metrics__num--v-warn { color: var(--c-warn); }
+.sh-metrics__num--v-danger { color: var(--c-danger); }
+.sh-metrics__label { font-size: 12px; color: var(--f-neutralSecondary); margin-top: 2px; }
+
+/* 行内状态文字色 */
+.sh-v-ok { color: var(--c-ok); }
+.sh-v-warn { color: var(--c-warn); }
+.sh-v-danger { color: var(--c-danger); }
+
+/* 进度条 */
+.sh-bar {
+  height: 6px; border-radius: 3px;
+  background: var(--f-neutralLight); overflow: hidden;
+}
+.sh-bar__i { height: 100%; background: var(--f-accent); border-radius: 3px; }
+.sh-bar__i--ok { background: var(--c-ok); }
+.sh-bar__i--warn { background: var(--c-warn); }
+.sh-bar__i--danger { background: var(--c-danger); }
+
+/* 行内操作链接 */
+.sh-bacts { display: flex; gap: 16px; margin-top: 10px; padding-top: 10px; border-top: 1rpx solid var(--weui-FG-3); }
+.sh-bact { font-size: 13px; color: var(--f-accent); }
+
+/* 空状态 */
+.sh-empty { text-align: center; color: var(--f-neutralTertiary); font-size: 13px; padding: 16px 16px; line-height: 1.6; }
+
+/* 状态标签（胶囊） */
+.sh-tag {
+  display: inline-block;
+  padding: 1px 10px;
+  border-radius: var(--f-radius-pill);
+  font-size: 12px; line-height: 1.7;
+  color: #fff; background: var(--f-accent);
+  white-space: nowrap;
+}
+.sh-tag--ok { background: var(--c-ok); }
+.sh-tag--warn { background: var(--c-warn); }
+.sh-tag--danger { background: var(--c-danger); }
+.sh-tag--brand { background: var(--f-accent); }
+.sh-tag--neutral { background: var(--f-neutralLighter); color: var(--f-neutralSecondary); }
+
+/* 分段控件（Fluent 胶囊分段） */
+.sh-seg {
+  display: flex;
+  background: var(--f-neutralLighter);
+  border-radius: var(--f-radius-control);
+  padding: 4px;
+}
+.sh-seg__item {
+  flex: 1; text-align: center; padding: 8px 4px;
+  font-size: 13px; color: var(--f-neutralSecondary);
+  border-radius: var(--f-radius-control);
+  transition: all .15s var(--f-ease);
+}
+.sh-seg__item--on {
+  background: var(--f-white);
+  color: var(--f-accent);
+  font-weight: 600;
+  box-shadow: var(--f-depth4);
+}
+
+/* 次级说明文字 */
+.sh-caption { font-size: 12px; color: var(--f-neutralSecondary); line-height: 1.5; }
+
+/* 分隔线 / 正文 / 按钮组 */
+.sh-divider { height: 1rpx; background: var(--weui-FG-3); margin: 10px 0; }
+.sh-body { font-size: 14px; color: var(--f-neutralSecondary); line-height: 1.6; }
+.sh-btns { margin-top: 16px; }
+.sh-btns .weui-btn + .weui-btn { margin-top: 12px; }
+
+/* 标题 / 副标题 */
+.sh-title { font-size: 16px; font-weight: 600; color: var(--f-neutralPrimary); }
+.sh-sub { font-size: 13px; color: var(--f-neutralSecondary); }
+
+/* 知识点掌握行 */
+.sh-kp { margin-bottom: 10px; }
+.sh-kp:last-child { margin-bottom: 0; }
+.sh-kp__lb { display: flex; justify-content: space-between; font-size: 12px; color: var(--f-neutralSecondary); margin-bottom: 4px; }
+
+/* 胶囊选择器 */
+.sh-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.sh-chip {
+  padding: 5px 14px; border-radius: var(--f-radius-pill);
+  background: var(--f-neutralLighter); color: var(--f-neutralSecondary);
+  font-size: 13px; transition: all .15s var(--f-ease);
+}
+.sh-chip--on { background: var(--f-accent); color: #fff; }
+
+/* 提示框（Fluent 信息条） */
+.sh-notice {
+  display: flex; gap: 8px;
+  background: var(--f-accent-soft2); border-radius: var(--f-radius-card);
+  padding: 10px 12px; font-size: 13px; color: var(--f-neutralSecondary); line-height: 1.6;
+  margin-top: 10px;
+}
+.sh-notice__ic { flex: none; color: var(--f-accent); }
+
+/* 需关注学生网格 */
+.sh-name-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.sh-name-cell {
+  padding: 6px 14px; border-radius: var(--f-radius-pill);
+  background: var(--f-neutralLighter); color: var(--f-neutralSecondary); font-size: 13px;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.sh-name-cell--danger { background: rgba(164, 38, 44, .12); color: var(--c-danger); }
+.sh-name-cell--warn { background: rgba(255, 156, 25, .14); color: var(--c-warn); }
+.sh-name-cell--on { background: rgba(15, 108, 189, .12); color: var(--f-accent); }
+.sh-name-cell--done { background: rgba(16, 124, 16, .12); color: var(--c-ok); }
+
+/* 学生名单编辑用胶囊（可点 × 删除） */
+.sh-name-cell--roster { background: var(--f-accent-soft); color: var(--f-accent); }
+.roster-x {
+  margin-left: 2px; font-size: 15px; line-height: 1;
+  color: var(--f-accent); opacity: .7;
+}
+.roster-x:active { opacity: 1; }
+/* 批量粘贴文本框 */
+.roster-ta {
+  width: 100%; box-sizing: border-box;
+  margin-top: 8px; padding: 10px 12px;
+  min-height: 88px;
+  background: var(--f-white);
+  border: 1rpx solid var(--weui-FG-3);
+  border-radius: var(--f-radius-control);
+  font-size: 14px; line-height: 1.5; color: var(--f-neutralPrimary);
+}
+
+/* 掌握度趋势柱状 */
+.sh-trend { display: flex; align-items: flex-end; gap: 8px; height: 84px; }
+.sh-tcol { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
+.sh-tbar { width: 100%; background: var(--f-accent); border-radius: 3px 3px 0 0; }
+.sh-tbar--now { background: var(--c-ok); }
+.sh-tx { font-size: 10px; color: var(--f-neutralTertiary); margin-top: 4px; }
+
+/* 辅导建议正文（粗体分段） */
+.sh-advice { font-size: 14px; color: var(--f-neutralSecondary); line-height: 1.7; }
+.sh-adv-b { font-weight: 600; color: var(--f-neutralPrimary); }
+
+/* 区块小标题 */
+.sh-section { font-size: 15px; font-weight: 600; color: var(--f-neutralPrimary); margin: 8px 2px 10px; }
+
+/* ============ 通用组件（多页复用）动效 ============ */
+@keyframes fFadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fScaleIn {
+  from { opacity: 0; transform: scale(.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fPop {
+  0% { opacity: 0; transform: scale(.96); }
+  60% { opacity: 1; transform: scale(1.02); }
+  100% { transform: none; }
+}
+/* 卡片入场：轻量 fade-up（仅首次渲染触发，setData 复用不重播） */
+.weui-panel, .weui-cells { animation: fFadeUp .367s var(--f-ease) both; }
+.f-anim { animation: fFadeUp .367s var(--f-ease) both; }
+.f-scale { animation: fScaleIn .267s var(--f-ease) both; }
+.f-pop { animation: fPop .2s var(--f-ease) both; }
+/* 错峰入场（仅针对具名子元素，避开 * 选择器） */
+.f-stagger > view { animation: fFadeUp .367s var(--f-ease) both; }
+.f-stagger > view:nth-child(1) { animation-delay: .03s; }
+.f-stagger > view:nth-child(2) { animation-delay: .06s; }
+.f-stagger > view:nth-child(3) { animation-delay: .09s; }
+.f-stagger > view:nth-child(4) { animation-delay: .12s; }
+.f-stagger > view:nth-child(5) { animation-delay: .15s; }
+.f-stagger > view:nth-child(6) { animation-delay: .18s; }
+.f-stagger > view:nth-child(n+7) { animation-delay: .21s; }
+@media (prefers-reduced-motion: reduce) {
+  .weui-panel, .weui-cells, .f-anim, .f-scale, .f-pop,
+  .f-stagger > view { animation: none; }
+}
+
+/* OOBE 引导页专用样式见 pages/oobe/oobe.wxss（页面级，优先级更高）。 */
+

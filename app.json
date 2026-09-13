@@ -1,0 +1,57 @@
+{
+  "pages": [
+    "pages/workbench/workbench",
+    "pages/batches/batches",
+    "pages/batch-detail/batch-detail",
+    "pages/capture/capture",
+    "pages/review/review",
+    "pages/insight/insight",
+    "pages/advice/advice",
+    "pages/settings/settings",
+    "pages/batch-create/batch-create",
+    "pages/knowledge/knowledge",
+    "pages/oobe/oobe"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#f7f7f7",
+    "navigationBarTitleText": "师务台",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#ededed",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#8A8886",
+    "selectedColor": "#0F6CBD",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/workbench/workbench",
+        "text": "工作台",
+        "iconPath": "assets/tabbar/home.png",
+        "selectedIconPath": "assets/tabbar/home_on.png"
+      },
+      {
+        "pagePath": "pages/batches/batches",
+        "text": "清单",
+        "iconPath": "assets/tabbar/batches.png",
+        "selectedIconPath": "assets/tabbar/batches_on.png"
+      },
+      {
+        "pagePath": "pages/insight/insight",
+        "text": "学情",
+        "iconPath": "assets/tabbar/insight.png",
+        "selectedIconPath": "assets/tabbar/insight_on.png"
+      },
+      {
+        "pagePath": "pages/settings/settings",
+        "text": "设置",
+        "iconPath": "assets/tabbar/settings.png",
+        "selectedIconPath": "assets/tabbar/settings_on.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
